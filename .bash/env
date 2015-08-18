@@ -1,0 +1,71 @@
+export KEYMAP="fr-latin9"
+export LANG="en_US.UTF8"
+export LOCALE="en_US.UTF8"
+export LD_LIBRARY_PATH="/usr/local/lib/"
+
+# we want the various sbins on the path along with /usr/local/bin
+export PATH="$HOME/bin:/usr/local/bin:$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+
+unset MAILCHECK
+
+# ----------------------------------------------------------------------
+# DISPLAY
+# ----------------------------------------------------------------------
+
+#test -n $SSH_CONNECTION && export DISPLAY=:0.0
+
+# ----------------------------------------------------------------------
+# PAGER / EDITOR
+# ----------------------------------------------------------------------
+
+export BROWSER="chromium"
+export EDITOR=vim
+export PAGER=less
+export MANPAGER="$PAGER"
+export MANPATH="/usr/local/share/man:$MANPATH"
+
+# ----------------------------------------------------------------------
+# HISTORY
+# ----------------------------------------------------------------------
+
+# ignore same successive entries.
+export HISTCONTROL=ignoreboth
+
+# ----------------------------------------------------------------------
+# LANGUAGES
+# ----------------------------------------------------------------------
+
+# go
+export GOPATH=$HOME/go
+PATH=$PATH:$GOPATH/bin
+
+# haskell
+PATH="$HOME/.cabal/bin:$PATH"
+
+# luarocks
+# $(luarocks path)
+# PATH="/usr/local/lib/luarocks/bin:$PATH"
+
+# ruby
+# Make ruby aware of gems when it runs
+export RUBYOPT=rubygems
+# export JRUBY_OPTS=--1.9
+export GEM_HOME="$HOME/.gem"
+
+# ----------------------------------------------------------------------
+# MISC
+# ----------------------------------------------------------------------
+
+# ec2
+export EC2_HOME="$HOME/.ec2"
+PATH="$PATH:$EC2_HOME/bin"
+
+export GITHUB_TOKEN=$(git config --get github.token)
+export GITHUB_USER=$(git config --get github.user)
+
+# Finally export PATH
+
+export PATH
+
+# https://bbs.archlinux.org/viewtopic.php?id=140902
+[[ $- == *i* ]] && stty -ixon

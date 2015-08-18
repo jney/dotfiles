@@ -1,0 +1,1 @@
+/home/jney/.config/fisherman/nvm/nvm.fish

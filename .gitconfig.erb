@@ -1,0 +1,91 @@
+[alias]
+  a = commit --amend
+  ah = commit --amend -C HEAD
+  ap = !git add -u && git commit --amend -C HEAD && git push -f
+  b = branch
+  bd = "!f() { git branch | grep $1 | xargs -n 1 -p git branch -d; }; f"
+  br = for-each-ref --sort='-authordate:iso8601' --format=' %(authordate:relative)%09%(refname:short)' refs/heads
+  bump = "!f(){ git cm \"Bump to $1\" && git tag $1 && git push && git push --tags; }; f"
+	c = commit
+	ci = commit -v
+	cia = commit -v -a
+	cm = commit -m
+	co = checkout
+	cp = cherry-pick
+	cr = clone --recursive
+	d = diff
+  f = fetch
+  feature = "!f() { git co -b feature/$(echo \"${@:1}\" | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-'); }; f"
+  fp = fetch -p --all
+  go = "!f() { git fetch origin && git co $1 && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); }; f"
+  hotfix = "!f() { git co -b hotfix/$(echo \"${@:1}\" | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-'); }; f"
+	l = log --decorate --all --oneline --graph
+	lc = log -p -n1
+	ll = log --abbrev-commit --date=short --pretty=format:"%h | %cd | %an | %s"
+	master = checkout master
+  me = !git -c user.name="Jean-Sebastien C Ney" -c user.email=jeansebastien.ney@gmail.com commit --amend --reset-author
+  mm = !b=$(git rev-parse --abbrev-ref HEAD) && git push -f && git co master && git fp && git merge $b && git push
+	msg = commit --allow-empty -m
+  pm = "!f() { git push $1 $(git rev-parse --abbrev-ref HEAD):master -f; }; f"
+	pullall = !git pull && git submodule update --init --recursive
+	r = reset --hard
+  rm-tag = "!f() { git tag -d $1 && git push origin :refs/tags/$1; }; f"
+  ro = !git fetch origin && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
+	rollback = checkout --
+  mb = !b=$(git rev-parse --abbrev-ref HEAD) && git co master && git merge $b && git push
+	st = status -sb
+  tree = !open -a ~/Applications/SourceTree.app . > /dev/null &
+  unadd = reset HEAD
+  up = !git pull --rebase origin master && git push -f
+	vis = !gitk --all &
+  x = !gitx
+
+[apply]
+  whitespace = nowarn
+
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	ui = true
+	pager = true
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+
+[core]
+	excludesfile = <%= ENV['HOME'] %>/.global_ignore
+	editor = vim
+	pager = "less -RciqMSj5"
+	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+
+[credential]
+  helper = cache --timeout=3600
+
+[format]
+	pretty = %C(yellow)%h%Creset %s
+
+[github]
+	user = <%= print("Your Github Name: "); STDOUT.flush; STDIN.gets.chomp %>
+	token = <%= print("Your Github Token: "); STDOUT.flush; STDIN.gets.chomp %>
+
+[user]
+  name = <%= print("Your Name: "); STDOUT.flush; STDIN.gets.chomp %>
+  email = <%= print("Your Email: "); STDOUT.flush; STDIN.gets.chomp %>
+
+[push]
+	default = current

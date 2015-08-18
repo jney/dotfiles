@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+files=$(git diff --name-only origin/master)
+for file in $files; do
+  if [ ${file: -3} == ".rb" ]; then
+    rubocop -a $file
+  fi
+done

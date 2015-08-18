@@ -1,0 +1,8 @@
+audio-display=no
+cache-default=50000
+cache=50000
+cache-pause=no
+fullscreen=yes
+slang=fre
+volume-max=200
+volume=60

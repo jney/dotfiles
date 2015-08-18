@@ -1,0 +1,42 @@
+# -------------------------------------------------------------------
+# Settings
+# -------------------------------------------------------------------
+escape            ^Bb           # Escaping with Ctrl+b (à la tmux)
+crlf              off           # No Microsoft linebreaks
+startup_message   off           # bypass GPL notice (we're aware)
+defscrollback     15000         # big scrollback
+shell             zsh           # don't start login shells
+shelltitle        "$ | zsh"     # suppose to write current process...
+defmonitor        on            # turn on monitoring
+activity          "<%n>"        # let you know when stuff happens!
+silencewait       15            # notify when window goes silent
+bell_msg          "DING! (%n)"
+vbell_msg         "DING! (%n)"
+vbell             off
+nethack           off           # makes error messages cryptic.
+pow_detach_msg    "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+autodetach        on
+defutf8           on
+term              screen-256color
+
+
+bindkey "^[[1;3D" prev
+bindkey "^[[1;3C" next
+bindkey -k k7 prev # F7
+bindkey -k k8 next # F8
+
+# current status
+hardstatus alwayslastline "${USER}@%H | %M%d %c | %{wk}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%?"
+
+# enable bold
+attrcolor b ".I"
+
+# no wait
+msgwait 0
+msgminwait 0
+
+# allow 256 colors
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+termcapinfo xterm ti@:te@
+
+# screen -t shell 0 zsh

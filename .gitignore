@@ -1,0 +1,5 @@
+.config/fish/fish_history
+.config/fish/fishd.*
+.config/fish/*.copy
+*.save
+.private

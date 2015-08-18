@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+app = ARGV[0] || 'mrdrive-shop-prod'
+
+file = '.env'
+exp = /([^:]+):\s*(.+)/
+
+# backup current file
+File.rename(file, file + '.bak') if File.exist?(file)
+
+# getting variables from heroku
+env_variables = `heroku config -a #{app}`
+
+File.open(file, 'w') do |f|
+  env_variables.each_line do |line|
+    if res = exp.match(line)
+      f.write("#{res[1]}=#{res[2]}\n")
+    end
+  end
+end

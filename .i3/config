@@ -1,0 +1,163 @@
+set $mod Mod4
+#set $mod Mode_switch
+
+# font for window titles. ISO 10646 = Unicode
+# font -misc-fixed-medium-r-normal--11-120-75-75-C-70-iso10646-1
+#font -*-montecarlo-medium-r-normal--11-110-72-72-c-60-*-*
+#font pango:DejaVu Sans Mono 8
+font pango:Bitstream Vera Sans Mono 8
+
+# new window default border
+new_window 1pixel
+new_float 1pixel
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+# TODO find another shortcut : not so often needed
+bindsym $mod+Return exec st -e tmux
+
+# kill & exit
+bindsym $mod+q       kill
+bindsym $mod+Shift+Q exit
+
+# launchers
+bindsym $mod+space       exec dmenu_run
+bindsym $mod+Shift+space exec python ~/.i3/nextfind.py
+
+# scratchpad
+bindsym $mod+m move scratchpad
+bindsym $mod+Shift+m scratchpad show
+
+# change focus
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal/vertical orientation
+bindsym $mod+h split h
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym F11 fullscreen
+
+# change container layout (stacked, tabbed, default)
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+n layout default
+
+# toggle tiling / floating
+bindsym $mod+Shift+f floating toggle
+
+# change focus between tiling / floating windows
+# bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+p focus parent
+
+# bindsym $mod+i exec --no-startup-id echo -e \
+# 'border\nexec\nexit\nfloating\nfocus\nfullscreen\nkill\nlayout\nmark\nmode\nmove\nnop\nopen\nreload\nresize\nrestart\nsplit\nworkspace'| dmenu | xargs i3-msg | xargs -0 -i notify-send -t 3000 "{}"
+
+# switch to workspace
+bindsym $mod+ampersand  workspace 1
+bindsym $mod+eacute     workspace 2
+bindsym $mod+quotedbl   workspace 3
+bindsym $mod+apostrophe workspace 4
+bindsym $mod+parenleft  workspace 5
+bindsym $mod+minus      workspace 6
+bindsym $mod+egrave     workspace 7
+bindsym $mod+underscore workspace 8
+bindsym $mod+ccedilla   workspace 9
+bindsym $mod+agrave     workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# reload the configuration file
+bindsym $mod+Shift+C reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+R restart
+
+# switch between workspaces
+bindsym $mod+Tab       workspace next
+bindsym $mod+Shift+Tab workspace previous
+bindsym $mod+BackSpace workspace back_and_forth
+workspace_auto_back_and_forth yes
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+    # Pressing left will shrink the window’s width.
+    # Pressing right will grow the window’s width.
+    # Pressing up will shrink the window’s height.
+    # Pressing down will grow the window’s height.
+    bindsym Right resize grow   width  1 px or 1 ppt
+    bindsym Up    resize grow   height 1 px or 1 ppt
+    bindsym Down  resize shrink height 1 px or 1 ppt
+    bindsym Left  resize shrink width  1 px or 1 ppt
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+bindsym $mod+e exec emacsclient -c
+bindsym $mod+Shift+e exec spacefm
+bindsym $mod+l exec slock
+bindsym $mod+Shift+k exec xkill
+bindsym $mod+Shift+s exec subl
+
+#bindsym Control+Shift+c exec xclip -i -selection clipboard
+#bindsym Control+Shift+v exec xclip -o -selection clipboard
+bindsym XF86AudioRaiseVolume exec dvol raise
+bindsym XF86AudioLowerVolume exec dvol lower
+bindsym XF86AudioMute exec dvol toggle
+bindcode 232 exec dbright dec
+bindcode 233 exec dbright inc
+
+# colors
+# class                    border  backgr. text
+client.focused             #88d7a3 #88d7a3 #111111
+client.unfocused           #2c2e2f #2c2e2f #315858
+client.focused_inactive    #2c2e2f #2c2e2f #2c2e2f
+client.urgent              #383a3b #383a3b #ee0000
+
+# always start a terminal
+exec_always --no-startup-id st -e tmux
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    mode hide
+    status_command i3status
+
+    colors {
+           statusline #76c2d6
+           background #191919
+           # class              border  backgrd text
+           focused_workspace    #191919 #191919 #bf3f34
+           active_workspace     #191919 #191919 #696f89
+           inactive_workspace   #191919 #191919 #696f89
+           urgent_workspace     #191919 #191919 #c7a551
+   }
+}
+
+# most of this scripts should probably be in my `.xinitrc`
